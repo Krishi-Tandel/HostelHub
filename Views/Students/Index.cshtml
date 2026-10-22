@@ -1,0 +1,93 @@
+
+@model IEnumerable<HostelHub.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<div class="editorial-page">
+    <div class="editorial-page-heading">
+        <div>
+            <div class="editorial-kicker">HOSTEL OPERATIONS / 03</div>
+            <h1>People <em>first.</em></h1>
+            <p>Resident records, course details, and room allocations in one place.</p>
+        </div>
+
+        <a asp-action="Create" class="editorial-button">
+            <span>+ Register a student</span><span class="button-arrow">↗</span>
+        </a>
+    </div>
+
+    <div class="editorial-list-meta">
+        <span>RESIDENT REGISTER</span>
+        <span>@Model.Count() STUDENTS LISTED</span>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="editorial-empty">
+            <span class="empty-mark">P.</span>
+            <h2>No residents registered yet.</h2>
+            <p>Add a student to begin managing hostel allocations.</p>
+            <a asp-action="Create" class="editorial-button">
+                Register the first student <span class="button-arrow">↗</span>
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive editorial-table-wrap">
+            <table class="table editorial-table">
+                <thead>
+                    <tr>
+                        <th>RESIDENT</th>
+                        <th>EMAIL</th>
+                        <th>PHONE</th>
+                        <th>COURSE</th>
+                        <th>ROOM ALLOCATION</th>
+                        <th class="text-end">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="room-number">@student.Name</span>
+                            </td>
+                            <td>@student.Email</td>
+                            <td>@student.Phone</td>
+                            <td>@student.Course</td>
+                            <td>
+                                @if (student.Room != null)
+                                {
+                                    <span class="availability-label available">
+                                        Room @student.Room.RoomNumber
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="availability-label full">
+                                        Not allocated
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                <div class="editorial-row-actions">
+                                    <a asp-action="Edit" asp-route-id="@student.StudentId">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@student.StudentId"
+                                       class="delete-link">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="editorial-page-foot">
+        <span>HOSTELHUB / RESIDENT MANAGEMENT</span>
+        <a asp-controller="Home" asp-action="Index">← Back to dashboard</a>
+    </div>
+</div>

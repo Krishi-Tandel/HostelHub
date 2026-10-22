@@ -1,0 +1,87 @@
+
+@model IEnumerable<HostelHub.Models.Room>
+
+@{
+    ViewData["Title"] = "Rooms";
+}
+
+<div class="editorial-page">
+    <div class="editorial-page-heading">
+        <div>
+            <div class="editorial-kicker">HOSTEL OPERATIONS / 02</div>
+            <h1>Room <em>directory.</em></h1>
+            <p>Every room, its capacity, and the space available to residents.</p>
+        </div>
+        <a asp-action="Create" class="editorial-button">
+            <span>+ Add a room</span><span class="button-arrow">↗</span>
+        </a>
+    </div>
+
+    <div class="editorial-list-meta">
+        <span>ROOM REGISTER</span>
+        <span>@Model.Count() ROOMS LISTED</span>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="editorial-empty">
+            <span class="empty-mark">R.</span>
+            <h2>No rooms registered yet.</h2>
+            <p>Start by adding your first hostel room.</p>
+            <a asp-action="Create" class="editorial-button">
+                Add the first room <span class="button-arrow">↗</span>
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive editorial-table-wrap">
+            <table class="table editorial-table">
+                <thead>
+                    <tr>
+                        <th>ROOM NO.</th>
+                        <th>ROOM TYPE</th>
+                        <th>CAPACITY</th>
+                        <th>OCCUPIED</th>
+                        <th>AVAILABLE</th>
+                        <th class="text-end">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var room in Model)
+                    {
+                        var occupied = room.Students?.Count ?? 0;
+                        var available = Math.Max(0, room.Capacity - occupied);
+
+                        <tr>
+                            <td>
+                                <span class="room-number">@room.RoomNumber</span>
+                            </td>
+                            <td>@room.RoomType</td>
+                            <td>@room.Capacity beds</td>
+                            <td>@occupied</td>
+                            <td>
+                                <span class="availability-label @(available > 0 ? "available" : "full")">
+                                    @(available > 0 ? $"{available} available" : "Full")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="editorial-row-actions">
+                                    <a asp-action="Details" asp-route-id="@room.RoomId">View</a>
+                                    <a asp-action="Edit" asp-route-id="@room.RoomId">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@room.RoomId"
+                                       class="delete-link">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="editorial-page-foot">
+        <span>HOSTELHUB / ROOM MANAGEMENT</span>
+        <a asp-controller="Home" asp-action="Index">← Back to dashboard</a>
+    </div>
+</div>

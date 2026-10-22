@@ -1,0 +1,72 @@
+
+@model HostelHub.Models.Complaint
+
+@{
+    ViewData["Title"] = "Delete Complaint";
+}
+
+<div class="editorial-page">
+    <div class="editorial-page-heading">
+        <div>
+            <div class="editorial-kicker">RESIDENT CONCERNS / 04.02</div>
+            <h1>Review before <em>removing.</em></h1>
+            <p>Check the complaint details before permanently deleting the record.</p>
+        </div>
+        <a asp-action="Index" class="editorial-text-link">← Complaint register</a>
+    </div>
+
+    <div class="editorial-form-layout">
+        <aside class="editorial-form-aside">
+            <span class="editorial-aside-index">CONFIRMATION / 03</span>
+            <h2>Close the<br /><em>record.</em></h2>
+            <p>Deleting a complaint removes it from the register. Consider resolving it instead if you need to preserve its history.</p>
+            <div class="editorial-aside-rule"></div>
+            <span class="editorial-aside-note">PERMANENT RECORD REMOVAL</span>
+        </aside>
+
+        <div class="editorial-form-panel">
+            <div class="editorial-form-panel-heading">
+                <span>COMPLAINT RECORD</span>
+                <span>DELETE REVIEW</span>
+            </div>
+
+            <div class="delete-record">
+                <span class="delete-record-label">ISSUE TITLE</span>
+                <h2>@Model.Title</h2>
+                <dl class="delete-details">
+                    <dt>Reported by</dt>
+                    <dd>@(Model.Student?.Name ?? "Unknown student")</dd>
+                    <dt>Date reported</dt>
+                    <dd>@Model.CreatedAt.ToString("dd MMM yyyy")</dd>
+                    <dt>Current status</dt>
+                    <dd>@Model.Status</dd>
+                    <dt>Description</dt>
+                    <dd>@Model.Description</dd>
+                </dl>
+            </div>
+
+            <div class="delete-warning">
+                <strong>Are you sure?</strong>
+                <p>This action permanently removes this complaint from the register.</p>
+            </div>
+
+            <form asp-action="Delete" asp-route-id="@Model.ComplaintId" method="post"
+                  class="editorial-form">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="ComplaintId" />
+
+                <div class="editorial-form-actions">
+                    <button type="submit" class="editorial-danger-button">
+                        Confirm deletion <span>↗</span>
+                    </button>
+                    <a asp-action="Index" class="editorial-cancel-link">Keep complaint</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="editorial-page-foot">
+        <span>HOSTELHUB / RESIDENT CONCERNS</span>
+        <span>FORM 04.02</span>
+    </div>
+</div>

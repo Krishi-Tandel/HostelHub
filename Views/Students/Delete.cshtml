@@ -1,0 +1,71 @@
+
+@model HostelHub.Models.Student
+
+@{
+    ViewData["Title"] = "Delete Student";
+}
+
+<div class="editorial-page">
+    <div class="editorial-page-heading">
+        <div>
+            <div class="editorial-kicker">RESIDENT MANAGEMENT / 03.03</div>
+            <h1>Close a <em>record.</em></h1>
+            <p>Review the resident details before confirming removal.</p>
+        </div>
+        <a asp-action="Index" class="editorial-text-link">← All students</a>
+    </div>
+
+    <div class="editorial-form-layout">
+        <aside class="editorial-form-aside">
+            <span class="editorial-aside-index">CONFIRMATION / 02</span>
+            <h2>Handle with<br /><em>care.</em></h2>
+            <p>Deleting a resident also removes their record from the student register.</p>
+            <div class="editorial-aside-rule"></div>
+            <span class="editorial-aside-note">THIS ACTION CANNOT BE UNDONE</span>
+        </aside>
+
+        <div class="editorial-form-panel">
+            <div class="editorial-form-panel-heading">
+                <span>RESIDENT RECORD</span>
+                <span>DELETE REVIEW</span>
+            </div>
+
+            <div class="delete-record">
+                <span class="delete-record-label">RESIDENT NAME</span>
+                <h2>@Model.Name</h2>
+                <dl class="delete-details">
+                    <dt>Email address</dt>
+                    <dd>@Model.Email</dd>
+                    <dt>Phone number</dt>
+                    <dd>@Model.Phone</dd>
+                    <dt>Course</dt>
+                    <dd>@Model.Course</dd>
+                    <dt>Room allocation</dt>
+                    <dd>@(Model.Room?.RoomNumber ?? "Not allocated")</dd>
+                </dl>
+            </div>
+
+            <div class="delete-warning">
+                <strong>Are you sure?</strong>
+                <p>This permanently deletes the student record and, depending on your database relationships, may also affect related complaint records.</p>
+            </div>
+
+            <form asp-action="Delete" asp-route-id="@Model.StudentId" method="post"
+                  class="editorial-form">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="StudentId" />
+                <div class="editorial-form-actions">
+                    <button type="submit" class="editorial-danger-button">
+                        Confirm deletion <span>↗</span>
+                    </button>
+                    <a asp-action="Index" class="editorial-cancel-link">Keep this resident</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="editorial-page-foot">
+        <span>HOSTELHUB / RESIDENT MANAGEMENT</span>
+        <span>FORM 03.03</span>
+    </div>
+</div>

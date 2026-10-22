@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="editorial-dashboard">
+
+    <section class="editorial-heading">
+        <div class="heading-main">
+            <div class="eyebrow"><span class="eyebrow-line"></span> HOSTEL OPERATIONS / 01</div>
+            <h1>A better way<br />to <span>live together.</span></h1>
+            <p class="heading-description">
+                Your hostel at a glance. Manage rooms, residents and everyday
+                issues from one place.
+            </p>
+        </div>
+
+        <div class="heading-side">
+            <span class="side-index">HH—001</span>
+            <div class="side-rule"></div>
+            <p>RESIDENCE<br />MANAGEMENT SYSTEM</p>
+            <a asp-controller="Students" asp-action="Create" class="editorial-button">
+                <span>Register a student</span><span class="button-arrow">↗</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="metrics-section">
+        <div class="section-heading">
+            <span>01 / THE NUMBERS</span>
+            <span>LIVE DATABASE OVERVIEW</span>
+        </div>
+
+        <div class="metrics-grid">
+            <a asp-controller="Rooms" asp-action="Index" class="metric metric-primary">
+                <div class="metric-top">
+                    <span class="metric-label">ROOMS REGISTERED</span>
+                    <span class="metric-symbol">R.</span>
+                </div>
+                <div class="metric-number">@ViewBag.TotalRooms</div>
+                <div class="metric-bottom">
+                    <span>Room directory</span><span>↗</span>
+                </div>
+            </a>
+
+            <a asp-controller="Students" asp-action="Index" class="metric">
+                <div class="metric-top">
+                    <span class="metric-label">RESIDENTS</span>
+                    <span class="metric-symbol">P.</span>
+                </div>
+                <div class="metric-number">@ViewBag.TotalStudents</div>
+                <div class="metric-bottom">
+                    <span>Registered students</span><span>↗</span>
+                </div>
+            </a>
+
+            <div class="metric">
+                <div class="metric-top">
+                    <span class="metric-label">OCCUPIED ROOMS</span>
+                    <span class="metric-symbol">O.</span>
+                </div>
+                <div class="metric-number">@ViewBag.OccupiedRooms</div>
+                <div class="metric-bottom">
+                    <span>Rooms with residents</span>
+                    <span class="metric-static-mark">—</span>
+                </div>
+            </div>
+
+            <div class="metric metric-accent">
+                <div class="metric-top">
+                    <span class="metric-label">AVAILABLE BEDS</span>
+                    <span class="metric-symbol">+</span>
+                </div>
+                <div class="metric-number">@ViewBag.VacantBeds</div>
+                <div class="metric-bottom">
+                    <span>Remaining capacity</span>
+                    <span class="metric-static-mark">—</span>
+                </div>
+            </div>
+
+            <a asp-controller="Complaints" asp-action="Index" class="metric">
+                <div class="metric-top">
+                    <span class="metric-label">OPEN COMPLAINTS</span>
+                    <span class="metric-symbol">!</span>
+                </div>
+                <div class="metric-number">@ViewBag.PendingComplaints</div>
+                <div class="metric-bottom">
+                    <span>Needs attention</span><span>↗</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="dashboard-lower">
+        <div class="actions-panel">
+            <div class="section-heading">
+                <span>02 / QUICK ACCESS</span>
+                <span>GET THINGS DONE</span>
+            </div>
+
+            <h2>Where would you<br />like to start?</h2>
+
+            <a class="editorial-action" asp-controller="Rooms" asp-action="Create">
+                <span class="action-number">01</span>
+                <span class="action-content">
+                    <strong>Add a room</strong>
+                    <small>Create a room and define its capacity.</small>
+                </span>
+                <span class="action-arrow">↗</span>
+            </a>
+
+            <a class="editorial-action" asp-controller="Students" asp-action="Create">
+                <span class="action-number">02</span>
+                <span class="action-content">
+                    <strong>Register a resident</strong>
+                    <small>Enter student details and allocate a bed.</small>
+                </span>
+                <span class="action-arrow">↗</span>
+            </a>
+
+            <a class="editorial-action" asp-controller="Complaints" asp-action="Create">
+                <span class="action-number">03</span>
+                <span class="action-content">
+                    <strong>Log an issue</strong>
+                    <small>Record a complaint for follow-up.</small>
+                </span>
+                <span class="action-arrow">↗</span>
+            </a>
+        </div>
+
+        <aside class="manifesto-panel">
+            <span class="manifesto-index">THE HOSTELHUB PRINCIPLE</span>
+            <div class="manifesto-mark">H<span>.</span></div>
+            <h2>Good management<br />makes room for<br /><em>better living.</em></h2>
+            <div class="manifesto-divider"></div>
+            <p>
+                One place for the details that keep a hostel running —
+                from room allocation to resolving residents' concerns.
+            </p>
+            <div class="manifesto-footer">
+                <span>DESIGNED FOR DAILY USE</span>
+                <span>EST. 2026</span>
+            </div>
+        </aside>
+    </section>
+
+    <footer class="dashboard-footnote">
+        <span>HOSTELHUB / MANAGEMENT</span>
+        <span>ROOMS · RESIDENTS · RESPONSIBILITY</span>
+    </footer>
+
+</div>

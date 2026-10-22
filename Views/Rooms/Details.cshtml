@@ -1,0 +1,44 @@
+
+@model HostelHub.Models.Room
+
+@{
+    ViewData["Title"] = "Room Details";
+}
+
+<div class="container mt-4">
+    <h1>Room Details</h1>
+    <p class="text-muted">View information about this hostel room.</p>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Room ID</dt>
+                <dd class="col-sm-9">@Model.RoomId</dd>
+
+                <dt class="col-sm-3">Room Number</dt>
+                <dd class="col-sm-9">@Model.RoomNumber</dd>
+
+                <dt class="col-sm-3">Room Type</dt>
+                <dd class="col-sm-9">@Model.RoomType</dd>
+
+                <dt class="col-sm-3">Capacity</dt>
+                <dd class="col-sm-9">@Model.Capacity</dd>
+
+                <dt class="col-sm-3">Students Assigned</dt>
+                <dd class="col-sm-9">@Model.Students.Count</dd>
+
+                <dt class="col-sm-3">Available Beds</dt>
+                <dd class="col-sm-9">
+                    @(Model.Capacity - Model.Students.Count)
+                </dd>
+            </dl>
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.RoomId"
+               class="btn btn-warning">Edit Room</a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary ms-2">Back to Rooms</a>
+        </div>
+    </div>
+</div>

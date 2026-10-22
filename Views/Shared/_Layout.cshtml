@@ -1,0 +1,163 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HostelHub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    @{
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    }
+
+    <div class="app-shell">
+        <aside class="sidebar" id="appSidebar">
+            <a class="brand" asp-controller="Home" asp-action="Index">
+                <span class="brand-icon">H</span>
+                <span class="brand-name">
+                    Hostel<span class="brand-accent">Hub</span>
+                    <small>HOSTEL MANAGEMENT</small>
+                </span>
+            </a>
+
+            <div class="sidebar-label">WORKSPACE <span>01—04</span></div>
+
+            <nav class="sidebar-nav" aria-label="Main navigation">
+                <a class="nav-item @(currentController == "Home" ? "active" : "")"
+                   asp-controller="Home" asp-action="Index">
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                    <span class="nav-item-index">01</span>
+                </a>
+
+                <a class="nav-item @(currentController == "Rooms" ? "active" : "")"
+                   asp-controller="Rooms" asp-action="Index">
+                    <span class="nav-icon">▦</span>
+                    <span>Rooms</span>
+                    <span class="nav-item-index">02</span>
+                </a>
+
+                <a class="nav-item @(currentController == "Students" ? "active" : "")"
+                   asp-controller="Students" asp-action="Index">
+                    <span class="nav-icon">♙</span>
+                    <span>Students</span>
+                    <span class="nav-item-index">03</span>
+                </a>
+
+                <a class="nav-item @(currentController == "Complaints" ? "active" : "")"
+                   asp-controller="Complaints" asp-action="Index">
+                    <span class="nav-icon">☷</span>
+                    <span>Complaints</span>
+                    <span class="nav-item-index">04</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-help-icon">✳</div>
+                <div class="sidebar-bottom-label">THE HOSTELHUB APPROACH</div>
+                <strong>Better managed.<br />Better lived.</strong>
+                <p>Thoughtful management for everyday hostel life.</p>
+                <div class="sidebar-bottom-foot">
+                    <span>EST. 2026</span>
+                    <span>HH / 01</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+        <main class="main-area">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="mobile-menu-button"
+                            id="mobileMenuButton" aria-label="Open navigation"
+                            aria-controls="appSidebar" aria-expanded="false">
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <div>
+                        <span class="topbar-eyebrow">HOSTEL ADMINISTRATION / INDIA</span>
+                        <h6 class="mb-0">Management Portal</h6>
+                    </div>
+                </div>
+
+                <div class="admin-profile">
+                    <div class="admin-avatar">A</div>
+                    <div class="admin-profile-copy">
+                        <strong>Administrator</strong>
+                        <small>Hostel Management</small>
+                    </div>
+                    <span class="admin-status" title="Application interface">●</span>
+                </div>
+            </header>
+
+            <div class="page-content">
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @TempData["Error"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+                }
+
+                @RenderBody()
+            </div>
+
+            <footer class="app-footer">
+                <span>HOSTELHUB</span>
+                <span class="footer-divider">/</span>
+                <span>HOSTEL MANAGEMENT SYSTEM</span>
+                <span class="footer-year">EST. 2026</span>
+            </footer>
+        </main>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            const sidebar = document.getElementById("appSidebar");
+            const button = document.getElementById("mobileMenuButton");
+            const scrim = document.getElementById("sidebarScrim");
+
+            if (!sidebar || !button || !scrim) return;
+
+            function setMenu(open) {
+                sidebar.classList.toggle("sidebar-open", open);
+                scrim.classList.toggle("scrim-visible", open);
+                button.setAttribute("aria-expanded", String(open));
+                button.setAttribute(
+                    "aria-label",
+                    open ? "Close navigation" : "Open navigation"
+                );
+                document.body.classList.toggle("menu-open", open);
+            }
+
+            button.addEventListener("click", () => {
+                setMenu(!sidebar.classList.contains("sidebar-open"));
+            });
+
+            scrim.addEventListener("click", () => setMenu(false));
+
+            sidebar.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", () => setMenu(false));
+            });
+
+            document.addEventListener("keydown", event => {
+                if (event.key === "Escape") setMenu(false);
+            });
+
+            window.addEventListener("resize", () => {
+                if (window.innerWidth > 850) setMenu(false);
+            });
+        })();
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

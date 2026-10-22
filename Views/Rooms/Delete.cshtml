@@ -1,0 +1,67 @@
+
+@model HostelHub.Models.Room
+
+@{
+    ViewData["Title"] = "Delete Room";
+}
+
+<div class="editorial-page">
+    <div class="editorial-page-heading">
+        <div>
+            <div class="editorial-kicker">ROOM MANAGEMENT / 02.03</div>
+            <h1>Before you <em>remove.</em></h1>
+            <p>Review this room record before confirming deletion.</p>
+        </div>
+        <a asp-action="Index" class="editorial-text-link">← Room directory</a>
+    </div>
+
+    <div class="editorial-form-layout">
+        <aside class="editorial-form-aside">
+            <span class="editorial-aside-index">CONFIRMATION / 01</span>
+            <h2>A careful<br /><em>decision.</em></h2>
+            <p>Rooms with assigned students cannot be deleted. Remove or reassign their residents first.</p>
+            <div class="editorial-aside-rule"></div>
+            <span class="editorial-aside-note">THIS ACTION CANNOT BE UNDONE</span>
+        </aside>
+
+        <div class="editorial-form-panel">
+            <div class="editorial-form-panel-heading">
+                <span>ROOM RECORD</span>
+                <span>DELETE REVIEW</span>
+            </div>
+
+            <div class="delete-record">
+                <span class="delete-record-label">ROOM NUMBER</span>
+                <h2>@Model.RoomNumber</h2>
+                <dl class="delete-details">
+                    <dt>Room type</dt>
+                    <dd>@Model.RoomType</dd>
+                    <dt>Bed capacity</dt>
+                    <dd>@Model.Capacity</dd>
+                </dl>
+            </div>
+
+            <div class="delete-warning">
+                <strong>Are you sure?</strong>
+                <p>This will permanently remove the room record if it has no assigned students.</p>
+            </div>
+
+            <form asp-action="Delete" asp-route-id="@Model.RoomId" method="post"
+                  class="editorial-form">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="RoomId" />
+                <div class="editorial-form-actions">
+                    <button type="submit" class="editorial-danger-button">
+                        Confirm deletion <span>↗</span>
+                    </button>
+                    <a asp-action="Index" class="editorial-cancel-link">Keep this room</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="editorial-page-foot">
+        <span>HOSTELHUB / ROOM MANAGEMENT</span>
+        <span>FORM 02.03</span>
+    </div>
+</div>

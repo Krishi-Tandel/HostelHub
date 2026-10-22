@@ -1,0 +1,92 @@
+
+@model HostelHub.Models.Complaint
+
+@{
+    ViewData["Title"] = "Log Complaint";
+}
+
+<div class="editorial-page">
+    <div class="editorial-page-heading">
+        <div>
+            <div class="editorial-kicker">RESIDENT CONCERNS / 04.01</div>
+            <h1>Every voice <em>matters.</em></h1>
+            <p>Record a resident's concern so it can be reviewed and resolved.</p>
+        </div>
+        <a asp-action="Index" class="editorial-text-link">← Complaint register</a>
+    </div>
+
+    <div class="editorial-form-layout">
+        <aside class="editorial-form-aside">
+            <span class="editorial-aside-index">04 / A</span>
+            <h2>Make it<br /><em>heard.</em></h2>
+            <p>Capture the issue clearly. The complaint will begin with Pending status for follow-up.</p>
+            <div class="editorial-aside-rule"></div>
+            <span class="editorial-aside-note">COMPLAINTS ARE CREATED AS PENDING</span>
+        </aside>
+
+        <div class="editorial-form-panel">
+            <div class="editorial-form-panel-heading">
+                <span>NEW COMPLAINT</span>
+                <span>01 — 03</span>
+            </div>
+
+            @if (ViewBag.StudentId == null ||
+                 !((IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)ViewBag.StudentId).Any())
+            {
+                <div class="delete-warning">
+                    <strong>No residents registered.</strong>
+                    <p>Register a student before recording a complaint.</p>
+                    <a asp-controller="Students" asp-action="Create"
+                       class="editorial-inline-link">Register a student ↗</a>
+                </div>
+            }
+            else
+            {
+                <form asp-action="Create" method="post" class="editorial-form">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="form-group">
+                        <label asp-for="StudentId">Resident</label>
+                        <select asp-for="StudentId" class="form-select" asp-items="ViewBag.StudentId">
+                            <option value="">Select a resident</option>
+                        </select>
+                        <span asp-validation-for="StudentId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Title">Issue title</label>
+                        <input asp-for="Title" class="form-control"
+                               placeholder="e.g. Water supply interruption" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Description">Describe the issue</label>
+                        <textarea asp-for="Description" class="form-control"
+                                  rows="5"
+                                  placeholder="Explain the problem and where it occurred..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <small class="editorial-field-note">Include enough detail to help the hostel team understand the issue.</small>
+                    </div>
+
+                    <div class="editorial-form-actions">
+                        <button type="submit" class="editorial-button">
+                            <span>Record complaint</span><span class="button-arrow">↗</span>
+                        </button>
+                        <a asp-action="Index" class="editorial-cancel-link">Cancel</a>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+
+    <div class="editorial-page-foot">
+        <span>HOSTELHUB / RESIDENT CONCERNS</span>
+        <span>FORM 04.01</span>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,88 @@
+
+@model HostelHub.Models.Student
+
+@{
+    ViewData["Title"] = "Register Student";
+}
+
+<div class="editorial-page">
+    <div class="editorial-page-heading">
+        <div>
+            <div class="editorial-kicker">RESIDENT MANAGEMENT / 03.01</div>
+            <h1>A place to <em>belong.</em></h1>
+            <p>Register a resident and assign a room when space is available.</p>
+        </div>
+        <a asp-action="Index" class="editorial-text-link">← All students</a>
+    </div>
+
+    <div class="editorial-form-layout">
+        <aside class="editorial-form-aside">
+            <span class="editorial-aside-index">03 / A</span>
+            <h2>Resident<br /><em>details.</em></h2>
+            <p>Accurate records help keep room allocations and resident information organised.</p>
+            <div class="editorial-aside-rule"></div>
+            <span class="editorial-aside-note">REQUIRED FIELDS ARE MARKED BY VALIDATION</span>
+        </aside>
+
+        <div class="editorial-form-panel">
+            <div class="editorial-form-panel-heading">
+                <span>NEW RESIDENT</span>
+                <span>01 — 05</span>
+            </div>
+
+            <form asp-action="Create" method="post" class="editorial-form">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group">
+                    <label asp-for="Name">Full name</label>
+                    <input asp-for="Name" class="form-control" placeholder="e.g. Aditi Sharma" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email">Email address</label>
+                    <input asp-for="Email" class="form-control" placeholder="name@example.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Phone">Phone number</label>
+                    <input asp-for="Phone" class="form-control" placeholder="Enter contact number" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Course">Course / Department</label>
+                    <input asp-for="Course" class="form-control" placeholder="e.g. Computer Engineering" />
+                    <span asp-validation-for="Course" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="RoomId">Room allocation <span class="optional-label">OPTIONAL</span></label>
+                    <select asp-for="RoomId" class="form-select" asp-items="ViewBag.RoomId">
+                        <option value="">Leave unallocated for now</option>
+                    </select>
+                    <span asp-validation-for="RoomId" class="text-danger"></span>
+                    <small class="editorial-field-note">Only rooms with available capacity can be assigned.</small>
+                </div>
+
+                <div class="editorial-form-actions">
+                    <button type="submit" class="editorial-button">
+                        <span>Register resident</span><span class="button-arrow">↗</span>
+                    </button>
+                    <a asp-action="Index" class="editorial-cancel-link">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="editorial-page-foot">
+        <span>HOSTELHUB / RESIDENT MANAGEMENT</span>
+        <span>FORM 03.01</span>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
